@@ -74,6 +74,8 @@
         <p><b>Session ID:</b> {{ session.id }}</p>
         <p><b>User:</b> {{ session.user_id }}</p>
         <p><b>Method:</b> {{ session.method_id }}</p>
+        <p><b>In:</b> {{ session.data_in }}</p>
+        <p><b>Out:</b> {{ session.data_out }}</p>
         <form action="{{ url_for('delete_session_form', session_id=session.id) }}" method="post">
             <label for="secret">User Pass:</label>
             <input type="password" name="secret">
