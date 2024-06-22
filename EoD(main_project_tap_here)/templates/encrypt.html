@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EoD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, textarea, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ method.caption }} Method</h1>
+        <form action="{{ url_for('encrypt') }}" method="post">
+            <input type="hidden" name="method_id" value="{{ method.id }}">
+            <label for="user_id">User:</label>
+            <select name="user_id" id="user_id">
+                {% for user in users %}
+                    <option value="{{ user }}">{{ user }}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="data_in">Text:</label>
+            <textarea name="data_in" id="data_in" maxlength="1000" required></textarea><br><br>
+            {% if method.caption == 'Caesar' %}
+                <label for="shift">Shift:</label>
+                <input type="number" name="shift" id="shift" required><br><br>
+            {% elif method.caption == 'Vigenere' %}
+                <label for="key">Key:</label>
+                <input type="text" name="key" id="key" required><br><br>
+            {% endif %}
+            <label for="action">Action:</label>
+            <select name="action" id="action">
+                <option value="encrypt">Encrypt</option>
+                <option value="decrypt">Decrypt</option>
+            </select><br><br>
+            <button type="submit">Send</button>
+        </form>
+        <a href="{{ url_for('get_methods') }}">Back</a>
+    </div>
+</body>
+</html>
